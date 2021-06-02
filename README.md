@@ -3,7 +3,7 @@
 The MATLAB Code for paper: Peak Temperature Analysis and Optimization for Pipelined Hard Real-Time Systems
 
 ## Install
-In MATLAB, run script 'mcto_install.m'
+In MATLAB, run script 'mcptm_install.m'
 
 
 ## Usage
