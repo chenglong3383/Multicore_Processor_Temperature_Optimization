@@ -11,7 +11,8 @@ validTarget = false(1, n);
 validTarget(config.actcoreIdx) = true;
 
 %% calculating
-if dynamicData.kernel == 0
+if dynamicData.kernel == 1
+    disp('Pre-computing impulses between nodes in TM for BS...');
     for actId = 1 :acn
         tact = zeros(1, acn);
         tslp = zeros(1, acn);
@@ -28,6 +29,7 @@ if dynamicData.kernel == 0
             
         end
     end
+    disp('Finish computing impulse between nodes in TM for BS!');
 end
 
 

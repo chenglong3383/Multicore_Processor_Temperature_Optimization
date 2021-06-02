@@ -86,7 +86,7 @@ for i = 1:numel(allMethods)
    end
 end
 
-step = max(1, ceil(step(1)));
+step = step(1);
 stepBsub = max(1, ceil(stepBsub(1)));
 verbose = ceil(verbose);
 config.step = step;
@@ -131,6 +131,8 @@ for b = b_min : stepBsub : b_max
     if rho * maxWcets >= 0.98
         continue;
     end
+
+
     dynamicData = makedata('b', b,'rho',rho, 'kernel', kernel);
     dynamicData.lseOffset = 350;
     dynamicData.lseK = 6;

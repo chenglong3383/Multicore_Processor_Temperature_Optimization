@@ -33,4 +33,4 @@ end
 
 plot(meantoffs, T2-T1, 'r-v','linewidth',1);
 grid on
-legend('two methods difference');
+legend('two methods difference: FBPT-ANPT');

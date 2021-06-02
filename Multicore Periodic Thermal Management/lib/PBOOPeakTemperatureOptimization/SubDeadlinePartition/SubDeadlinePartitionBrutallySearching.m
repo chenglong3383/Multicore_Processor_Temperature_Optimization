@@ -131,6 +131,7 @@ count = 0;
 
 stop = 0;
 isFast = false;
+tstart = tic;
 while ~stop
     
     % the deadline partition for current deadline index
@@ -201,9 +202,12 @@ while ~stop
     % update the deadline index
     [deadlineIdx, flag] = updateIndex(acn-1, limit, deadlineIdx);
     count = count +1;
-    if verbose >= 2 &&  count > disp_ticks(tickid) 
+    if verbose >= 3 &&  count > disp_ticks(tickid) 
+        timeExpense = toc(tstart);
         disp(['SDP: complete ', num2str(percent_tick(tickid)), '%, current', ...
-            ' best temperature ', num2str(optTemp, '%.3f'), ' (K)']);
+            ' best temperature ', num2str(optTemp, '%.3f'), ' (K)', ...
+            ' remain time: ', num2str( 100*timeExpense/percent_tick(tickid) ...
+            -  timeExpense, '%.5d'), ' s' ]);
         if tickid  < numticks
             tickid = tickid + 1;
         end

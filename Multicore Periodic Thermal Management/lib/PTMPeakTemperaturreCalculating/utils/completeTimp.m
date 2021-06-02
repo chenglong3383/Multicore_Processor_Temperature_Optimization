@@ -75,7 +75,7 @@ for j = 1 : TM.n
                 ' of property "sizet" and "p" should satisfy "sizet*p > max(tend)+2*period" ']);
         end
         
-        if ~TM.isComplete(id_target,id_heatsource)
+        if ~isfield(TM, 'isComplete') || ~TM.isComplete(id_target,id_heatsource)
             p               = TM.p;
             t               = 0 : p : p*( TM.sizet - 1);
             if isfield(TM, 'H') && numel(TM.H(:, id_target, id_heatsource))==TM.sizet
@@ -84,7 +84,10 @@ for j = 1 : TM.n
                 NH = fft( max(TM.fitResults{id_target,id_heatsource}.fitresult(t),0),fftLength) ;
             end
             
-            
+            if ~isfield(TM, 'fftH')
+                TM.fftH = fftH(TM.fftLength, TM.n, TM.n);
+                fftHinit(TM.fftH, 1:TM.n);
+            end
             % uncomment these two lines to save NH to TM,
             flag2 = fftHwrite(TM.fftH, id_target, id_heatsource, NH);
             if ~flag2

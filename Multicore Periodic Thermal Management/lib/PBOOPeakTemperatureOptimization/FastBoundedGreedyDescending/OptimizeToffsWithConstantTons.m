@@ -1,7 +1,7 @@
 function [toffs, miniTemp, solutionAux, TM] = OptimizeToffsWithConstantTons(tons, problemConfig, TM, isquick)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-if nargin < 5
+if nargin < 4
     isquick = [];
 end
 

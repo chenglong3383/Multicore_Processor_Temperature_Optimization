@@ -64,24 +64,15 @@ p           = TM.p;
 scalor      = 0.001; % the unit of toff and ton is ms, scale between ms and s
 pToffTon    = p / scalor;  %% the resolution of toff and ton, unit ms
 K           = rho * config.wcets;
-SumBound    = b - config.sumWcet - config.sumTswon;
+SumBound    = b - config.sumWcet - config.sumTswon; % the upper bound of the sum of toffs
 
+config.SumBound     = SumBound;
+config.lseOffset    = dynamicData.lseOffset;
+config.lseK         = dynamicData.lseK;
+config.K            = K;
+config.pToffTon     = pToffTon;
+config.scalor       = scalor;
 
-
-dynamicData.pToffTon = pToffTon;
-dynamicData.scalor = scalor;
-dynamicData.K   = K;
-dynamicData.SumBound = SumBound;
-
-if kernel == 2
-    dynamicData.isSA = true;
-else
-    dynamicData.isSA = false;
-end
-
-%% determine the feasible region of toffs
-
-dynamicData = getfeasibleRegion(dynamicData, config, TM);
 
 if SumBound <= config.sumTswoff
     miniTpeak = max(TM.T_inf_a(config.actcoreIdx));
@@ -90,24 +81,13 @@ if SumBound <= config.sumTswoff
     return;
 end
 
-%% prepare candidates of toff and ton for brutally searching
-dynamicData = prepareCandids(dynamicData, config);
 
-
-%% prepare the Timp of candidate toffs, which is used as a lookup table
-
-TM = prepareCandidTimp(dynamicData, config, TM);
-
-config.SumBound     = dynamicData.SumBound;
-config.lseOffset    = dynamicData.lseOffset;
-config.lseK         = dynamicData.lseK;
-config.K            = dynamicData.K;
 
 %% sloving
 switch kernel
     case 1
-        [~, solution, TM] = findTheOptSolutionBrutally(TM, config, dynamicData);
-        [miniTpeak, solution, TM] = repairPBOOPTM(TM, config, dynamicData, solution);
+        [miniTpeak, solution, TM] = findTheOptSolutionBrutally(TM, config);
+         
     case 2
         startCoef = ones(1, config.activeNum);
         [tons, toffs, miniTpeak, ~, ~, ~, TM] = findingOptimalTonByGreedy(startCoef, config, TM);

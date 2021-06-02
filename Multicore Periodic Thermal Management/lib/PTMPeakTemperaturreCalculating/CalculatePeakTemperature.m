@@ -26,6 +26,15 @@ function [Tpeak, TM] = CalculatePeakTemperature(TM, tslp, tact, scope, nodeIdx)
 % Note: the order of cores in tslp and tact should be same with that in TM.
 %       the time unit is milisecond!
 
+[flag, report] = checkInputsForPeakTemperatureComputing(TM, tslp, tact);
+if flag == 0
+    warning(report);
+end
+
+if flag < 0
+    error(report, 0);
+end
+
 
 N               = TM.N;
 p               = TM.p;

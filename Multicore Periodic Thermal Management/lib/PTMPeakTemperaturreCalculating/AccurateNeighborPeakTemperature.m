@@ -18,7 +18,14 @@ function [Tpeak, TM] = AccurateNeighborPeakTemperature(TM, tslp, tact)
 % 
 % Note: the order of cores in tslp and tact should be same with that in TM.
 %       the time unit is milisecond!
+[flag, report] = checkInputsForPeakTemperatureComputing(TM, tslp, tact);
+if flag == 0
+    warning(report);
+end
 
+if flag < 0
+    error(report, 0);
+end
 
 scalor  = 0.001; % unit ms
 pTact   = TM.p / scalor;          % the resolution of tact and tslp

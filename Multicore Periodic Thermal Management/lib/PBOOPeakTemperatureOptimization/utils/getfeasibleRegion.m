@@ -18,19 +18,5 @@ end
 dynamicData.feasibleRegion = feasibleRegion;
 return;
 
-sumMinToff = sum(feasibleRegion(:,1));
-sumTswon = sum(config.tswons);
-for i =  1 : acn
-    sumOtherMinToff = sumMinToff - feasibleRegion(i,1);
-    feasibleRegion(i,2) = dynamicData.b - config.sumWcet - sumTswon...
-        - sumOtherMinToff;  
-    if feasibleRegion(i,2) < feasibleRegion(i,1)
-        error('b too small');
-    end
-    
-end
-
-
-dynamicData.feasibleRegion = feasibleRegion;
 
 end
